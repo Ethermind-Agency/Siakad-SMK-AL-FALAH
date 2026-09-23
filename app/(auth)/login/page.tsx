@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, Suspense } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import {
   LogIn,
@@ -95,7 +95,7 @@ const ROLE_CONFIGS: Record<UserRole, RoleConfig> = {
 
 const ROLE_ORDER: UserRole[] = ["admin_tu", "kepala_sekolah", "guru", "siswa_ortu"];
 
-export default function LoginPage() {
+function LoginForm() {
   const router = useRouter();
   const searchParams = useSearchParams();
 
@@ -367,6 +367,20 @@ export default function LoginPage() {
         </p>
       </div>
     </div>
+  );
+}
+
+export default function LoginPage() {
+  return (
+    <Suspense
+      fallback={
+        <div className="p-8 text-center text-xs text-muted-foreground">
+          Memuat portal login...
+        </div>
+      }
+    >
+      <LoginForm />
+    </Suspense>
   );
 }
 
